@@ -1,5 +1,8 @@
 comicTitle = "COMIC TITLE"
-folders = ["m"]
+folders = [
+    "character",
+    "m"
+]
 
 masterlist = [
     {
@@ -39,9 +42,7 @@ const templateViewer =`
 <div id="container">
     <div id="top">
         <header></header>
-
         <div id="nextprev"></div>
-
         <div id="extra">
             <a href="` + relativePath + `index.html">✮</a>
         </div>
@@ -55,9 +56,10 @@ const templateViewer =`
             <div id="info"></div>
         </aside>
         <div>
-            <div id="comments"><div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Beep Boop</a>, hold please!</div><link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" /><style>#HCB_comment_box img{width:auto;display:inline-block;}.home-desc{display:none;}#HCB_comment_box h3:first-child{margin:0;}</style></div>
+            <div id="comments"></div>
         </div>
     </div>
+</div>
 `
 
 e = document.querySelector("body")
@@ -87,6 +89,9 @@ if ( ! current.file.endsWith(".html") ) {current.file += ".html";}
 current.obj = findVolume(current.folder)
 if( current.obj !== undefined ){
     current.index = findIndex(current.obj, current.file)
+}
+
+if ( current.index > -1 ) {
     current.issue = getTitle(current.obj.issues[current.index])
 
     resultHeader = genHeader(current.index, current.obj)
@@ -97,6 +102,8 @@ if( current.obj !== undefined ){
 
     resultNext = genNext(current.index, current.obj)
     document.getElementById("next").innerHTML = resultNext
+
+    document.title = current.issue
 }
 
 // FUNCTIONS - What the func!
@@ -106,7 +113,6 @@ function getRelativePath(){
         if (folders[i]===s){ return "./../"}
 
     } 
-
     return "./"
 }
 
@@ -125,15 +131,13 @@ function findIndex(volume,file){
             return i
         }
     }
-	return
+	return -1
 }
 
 function genHeader() {
-    issue = getTitle(current.obj.issues[current.index])
-    
     result=`
     <a href="` + relativePath + `index.html">` + comicTitle + `</a>
-    <span>` + issue + `</span>
+    <span>` + current.issue + `</span>
     `
     return result
 }
@@ -243,7 +247,12 @@ function changeIssue(){
 
 
 // BEEP BOOP
-if(document.title===""){ document.title = title}else{document.title = current.issue + " | " + comicTitle;}
+if( document.title==="" ){ 
+    document.title = comicTitle
+} else {
+    document.title += " | " + comicTitle
+}
+
 document.querySelector("head").innerHTML += `<meta name="keywords" content="stupied, stupiedidiot, stupied.idiot, stupied_idiot, art, original characters, ocs, fanart ">`
 document.querySelector("head").innerHTML += '<link rel="icon" type="image/x-icon" href="'+relativePath+'img/favicon.ico"></link>'
 
