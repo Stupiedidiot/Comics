@@ -144,20 +144,23 @@ function genHeader() {
 
 function genNav(index,obj){
 	result = `
-    <a href="./#PREV">«</a>
+    <a href="./#PREV" id="prev-button">«</a>
     <select id="top-list" onchange="changeIssue()">#LIST</select>
-    <a href="./#NEXT">»</a>
+    <a href="./#NEXT" id="next-button">»</a>
 	`
     
     if( obj.issues[index-1] ){
         prev=index-1
         result = result.replaceAll("#PREV", obj.issues[prev].file)
+        current.prev=true
     }
 
     if( obj.issues[index+1] ){
         next=index+1
         result = result.replaceAll("#NEXT", obj.issues[next].file)
+        current.next=true
     }
+    
 
     list = ""
     for(i=0; i < obj.issues.length ;i++){
@@ -245,6 +248,17 @@ function changeIssue(){
     window.location.href = current.obj.issues[e].file
 }
 
+// Keyboard Navigation
+document.onkeydown = function(event) {
+    switch (event.keyCode) {
+       case 37:
+        if(current.prev===true){document.getElementById("prev-button").click()}
+       break;
+       case 39:
+        if(current.next===true){document.getElementById("next-button").click()}
+       break;
+    }
+};
 
 // BEEP BOOP
 if( document.title==="" ){ 
