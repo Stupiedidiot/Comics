@@ -104,6 +104,18 @@ if ( current.index > -1 ) {
     document.getElementById("next").innerHTML = resultNext
 
     document.title = current.issue
+    document.onkeydown = function(event) {
+        if( document.activeElement === document.querySelector("body") ){
+            switch (event.keyCode) {
+                case 37:
+                 if(current.prev===true){document.getElementById("prev-button").click()}
+                break;
+                case 39:
+                 if(current.next===true){document.getElementById("next-button").click()}
+                break;
+             }
+        }
+    };
 }
 
 
