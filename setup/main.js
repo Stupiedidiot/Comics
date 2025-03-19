@@ -106,6 +106,7 @@ if ( current.index > -1 ) {
     document.title = current.issue
 }
 
+
 // FUNCTIONS - What the func!
 function getRelativePath(){
     s = urlSplit[urlSplit.length-2]
@@ -248,18 +249,6 @@ function changeIssue(){
     window.location.href = current.obj.issues[e].file
 }
 
-// Keyboard Navigation
-document.onkeydown = function(event) {
-    switch (event.keyCode) {
-       case 37:
-        if(current.prev===true){document.getElementById("prev-button").click()}
-       break;
-       case 39:
-        if(current.next===true){document.getElementById("next-button").click()}
-       break;
-    }
-};
-
 // BEEP BOOP
 if( document.title==="" ){ 
     document.title = comicTitle
@@ -270,7 +259,15 @@ if( document.title==="" ){
 document.querySelector("head").innerHTML += `<meta name="keywords" content="stupied, stupiedidiot, stupied.idiot, stupied_idiot, art, original characters, ocs, fanart ">`
 document.querySelector("head").innerHTML += '<link rel="icon" type="image/x-icon" href="'+relativePath+'img/favicon.ico"></link>'
 
+
 // COMMENTS
+hcb_user = {
+    comments_header : 'Comments',
+    name_label : 'Name / Website',
+    submit : 'Comment!!',
+    mod_label:'(real!)'
+};
+
 if (e=document.getElementById("comments")){
 	e.innerHTML='<div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Beep Boop</a>, hold please!</div><link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" /><style>#HCB_comment_box img{width:auto;display:inline-block;}.home-desc{display:none;}#HCB_comment_box h3:first-child{margin:0;} .comment img[src*="https://www.htmlcommentbox.com/storage/"] {max-width:100%;}</style>';
 	loadcomments()
